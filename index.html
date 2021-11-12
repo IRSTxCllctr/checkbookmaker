@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkbook and Budget Calculator</title>
+    <script>
+        document.addEventListener("DOMContentLoaded",function (event){
+            console.log(event)
+            //assigns a constant variable that is the html for the checkbook row.
+            const newRow =  ` <tr>
+        <td>
+            <input type="date" id="dateofCheck" name="Date">
+        </td>
+        <td> <input type="number" id="Check#" step="1" min="501" name="CheckNum"></td>
+        <td><input type="text" id="Item" name="ItemName"></td>
+        <td><input type="list" list="BudgetList" name="BudgetList"></td>
+         <td><span>$</span><input type="number" id="Cost" name="Cost"><button type="button">Save</button></td>
+     </tr>`
+            const checkBookBody = document.querySelector("#TableBody"); //defines the table body
+            checkBookBody.addEventListener("click", function (event){
+                console.log(event)
+                if(event.target.matches("button")) { //checks to see if someone clicked a button.
+                    checkBookBody.insertAdjacentHTML("beforeend", newRow)
+                }
+            })
+
+
+
+        })
+    </script>
+</head>
+<body>
+<h1>Checkbook and Budget Calculator</h1>
+<datalist id="BudgetList">
+    <option value="Housing">
+    <option value="Food">
+    <option value="Clothing">
+    <option value="Utilities">
+    <option value="Transportation">
+    <option value="Entertainment">
+    <option value="Miscellaneous">
+</datalist>
+
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Check #</th>
+        <th>Item</th>
+        <th>Budget Type</th>
+        <th>Cost</th>
+    </tr>
+    <tbody id="TableBody">
+    <tr>
+        <td>
+            <input type="date" id="dateofCheck" name="Date">
+        </td>
+        <td> <input type="number" id="Check#" step="1" min="501" name="CheckNum"></td>
+        <td><input type="text" id="Item" name="ItemName"></td>
+        <td><input type="list" list="BudgetList" name="BudgetList"></td>
+        <td><span>$</span><input type="number" id="Cost" name="Cost"><button type="button">Save</button></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <td colspan="4"> </td>
+    <td colspan="1"><label>Subtotal</label><span>$</span><label for="Subtotal"><input type="number" id="Subtotal"></label></td>
+    </tfoot>
+</table>
+</body>
+</html>
