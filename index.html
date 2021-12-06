@@ -5,23 +5,66 @@
     <title>Checkbook and Budget Calculator</title>
     <script>
         //checking for dev
+        class Checkbook {
+            constructor() {
+                this.checkBookRows = []
+            }
+                getSubtotal()
+                {
+                    let subtotal = 0.00;
+                    for (let i = 0; i < this.checkBookRows.length; i++)
+                    {
+                        subtotal += this.checkBookRows[i].cost;
+                    }
+                    return subtotal;
+                }
+        }
+        class Check {
+            constructor(date, check_num, item, budget_type, cost) {
+                this.date = date;
+                this.check_num = parseInt(check_num);
+                this.item = item;
+                this.budget_type = budget_type;
+                this.cost = parseFloat(cost);
+            }
+            get nextCheckNum(){
+                return this.check_num + 1;
+            }
+        }
         document.addEventListener("DOMContentLoaded",function (event){
+            let checkBook = new Checkbook();
             console.log(event)
             //assigns a constant variable that is the html for the checkbook row.
             const newRow =  ` <tr>
         <td>
-            <input type="date" id="dateofCheck" name="Date">
+            <input type="date" class="dateofCheck" name="Date">
         </td>
-        <td> <input type="number" id="Check#" step="1" min="501" name="CheckNum"></td>
-        <td><input type="text" id="Item" name="ItemName"></td>
-        <td><input type="list" list="BudgetList" name="BudgetList"></td>
-         <td><span>$</span><input type="number" id="Cost" name="Cost"><button type="button">Save</button></td>
+        <td> <input type="number" class="checkNum" step="1" min="501" name="CheckNum"></td>
+        <td><input type="text" class="Item" name="ItemName"></td>
+        <td><input type="list" list="BudgetList" name="BudgetList" class="bList"></td>
+         <td><span>$</span><input type="number" class="Cost" name="Cost"><button type="button">Save</button></td>
      </tr>`
             const checkBookBody = document.querySelector("#TableBody"); //defines the table body
             checkBookBody.addEventListener("click", function (event){
-                console.log(event)
+
                 if(event.target.matches("button")) { //checks to see if someone clicked a button.
+                    const tableRow = event.target.parentNode.parentNode;
+                    const date = tableRow.querySelector("input.dateofCheck").value;
+                    console.log(date)
+                    const checkNum = tableRow.querySelector("input.checkNum").value;
+                    console.log(checkNum)
+                    const Item = tableRow.querySelector("input.Item").value;
+                    console.log(Item)
+                    const bList = tableRow.querySelector("Input.bList").value;
+                    console.log(bList)
+                    const Cost = tableRow.querySelector("Input.Cost").value;
+                    console.log(Cost)
                     checkBookBody.insertAdjacentHTML("beforeend", newRow)
+                    const check = new Check(date, checkNum, Item, bList, Cost);
+                    console.log(check.date)
+                    console.log(check.Cost)
+                    const subtotalText = document.querySelector("input#subtotal")
+                    subtotalText.value = Checkbook.getSubtotal().toFixed(2)
                 }
             })
 
@@ -53,12 +96,12 @@
     <tbody id="TableBody">
     <tr>
         <td>
-            <input type="date" id="dateofCheck" name="Date">
+            <input type="date" class="dateofCheck" name="Date">
         </td>
-        <td> <input type="number" id="Check#" step="1" min="501" name="CheckNum"></td>
-        <td><input type="text" id="Item" name="ItemName"></td>
-        <td><input type="list" list="BudgetList" name="BudgetList"></td>
-        <td><span>$</span><input type="number" id="Cost" name="Cost"><button type="button">Save</button></td>
+        <td> <input type="number" class="checkNum" step="1" min="501" name="CheckNum"></td>
+        <td><input type="text" class="Item" name="ItemName"></td>
+        <td><input type="list" list="BudgetList" name="BudgetList" class="bList"></td>
+        <td><span>$</span><input type="number" class="Cost" name="Cost"><button type="button">Save</button></td>
     </tr>
     </tbody>
     <tfoot>
